@@ -1,27 +1,24 @@
 
-
-from dataStructure.binaryTree import Optional, TreeNode
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
 
 class BinaryTreeAlgorithm:
-    pass
 
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, val=0, left=None, right=None):
-#         self.val = val
-#         self.left = left
-#         self.right = right
-class Solution:
-    def tree2str(self, root: Optional[TreeNode]) -> str:
+
+    def binaryTreeToStr(self, root) -> str:
         
         def B(temp):
             if temp is None:
                 return None
+            
             l = B(temp.left)
             r = B(temp.right)
-            #l = l1[:] if l1 else None
-            #r = r1[:] if r1 else None
+            
             if l and r:
                 return f"{temp.val}({l})({r})"
             elif l and (r is None):
@@ -30,7 +27,52 @@ class Solution:
                 return f"{temp.val}()({r})"
             else:
                 return f"{temp.val}"
+            
         return B(root)
             
-                
+    def binaryTreeToInorderTraversal(self, root):
+        ans = []
+        def B(temp):
+            if temp:
+                B(temp.left)
+                ans.append(temp.val)
+                B(temp.right)
+        B(root)
+        return ans
+               
+    def binaryTreeToPreorderTraversal(self, root):
+        ans = []
+        def B(temp):
+            if temp:
+                ans.append(temp.val)
+                B(temp.left)
+                B(temp.right)
+        B(root)
+        return ans                
+    
+    def binaryTreeToPostorderTraversal(self, root):
+        ans = []
+        def B(temp):
+            if temp:
+                B(temp.left)
+                B(temp.right)
+                ans.append(temp.val)
+        B(root)
+        return ans
+
+
+
+def main():
+    root = TreeNode(1, TreeNode(2, TreeNode(4)), TreeNode(3))
+    algo = BinaryTreeAlgorithm()
+    
+    print()
+    print("================= Begin ====================================")
+    print("Binary Tree To Str: ", algo.binaryTreeToStr(root), end="\n\n")
+    print("Inorder Traversal: ", algo.binaryTreeToInorderTraversal(root))
+    print("Preorder Traversal: ", algo.binaryTreeToPreorderTraversal(root))
+    print("Postorder Traversal: ", algo.binaryTreeToPostorderTraversal(root))
+
+if __name__ == "__main__":
+    main()
         
